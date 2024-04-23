@@ -1,22 +1,31 @@
+import Nav from "./Nav";
 import Card from "./Card";
 
 function Home({ games, isLoading }) {
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <>
+        <Nav />
+        <p>Loading...</p>
+      </>
+    );
   } else {
     return (
-      <div>
-        {games.map((game) => {
-          return (
-            <Card
-              key={game._id}
-              name={game.name}
-              imageURL={game.imageURL}
-              gameID={game._id}
-            />
-          );
-        })}
-      </div>
+      <>
+        <Nav isGameActive={false} />
+        <div>
+          {games.map((game) => {
+            return (
+              <Card
+                key={game._id}
+                name={game.name}
+                imageURL={game.imageURL}
+                gameID={game._id}
+              />
+            );
+          })}
+        </div>
+      </>
     );
   }
 }

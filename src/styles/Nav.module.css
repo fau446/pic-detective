@@ -1,0 +1,14 @@
+.nav {
+  border-bottom: 2px solid black;
+}
+
+.top {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.bottom li {
+  display: inline-block;
+  margin: 0 15px;
+}

@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Nav from "./Nav";
 import Dropdown from "./Dropdown";
 
 function Game() {
   const { gameID } = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const [isGameActive, setIsGameActive] = useState(false);
   const [characters, setCharacters] = useState([]);
   const [displayDropdown, setDisplayDropdown] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ x: 0, y: 0 });
@@ -16,10 +18,11 @@ function Game() {
       try {
         await new Promise((resolve) => setTimeout(resolve, 1000));
         setCharacters([
-          { _id: "Char1", name: "Bob" },
-          { _id: "Char2", name: "Jane" },
+          { _id: "Char1", name: "Bob", found: true },
+          { _id: "Char2", name: "Jane", found: false },
         ]);
         setIsLoading(false);
+        setIsGameActive(true);
       } catch (err) {
         console.log(`Error: ${err}`);
       }
@@ -39,23 +42,27 @@ function Game() {
   }
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <>
+        <Nav />
+        <p>Loading...</p>
+      </>
+    );
   } else {
     return (
-      <div>
-        <h1>{gameID}</h1>
-        <p>Game</p>
-        <div onClick={toggleDropdown}>
-          <p>Image Goes Here!</p>
+      <>
+        <Nav isGameActive={isGameActive} characters={characters} />
+        <div>
+          <h1>{gameID}</h1>
+          <p>Game</p>
+          <div onClick={toggleDropdown}>
+            <p>Image Goes Here!</p>
+          </div>
+          {displayDropdown && (
+            <Dropdown coords={dropdownPosition} options={characters} />
+          )}
         </div>
-        {displayDropdown && (
-          <Dropdown
-            coords={dropdownPosition}
-            options={characters}
-            handleOptionSelect={handleOptionSelect}
-          />
-        )}
-      </div>
+      </>
     );
   }
 }
