@@ -18,16 +18,11 @@ function App() {
             _id: "Id1",
             name: "Game 1",
             imageURL: "URL 1",
-            characters: [
-              { name: "Bob", xCoord: 2, yCoord: 65 },
-              { name: "Jane", xCoord: 123, yCoord: 127 },
-            ],
           },
           {
             _id: "Id2",
             name: "Game 2",
             imageURL: "URL 2",
-            characters: [{ name: "Brad", xCoord: 92, yCoord: 12 }],
           },
         ]);
         setIsLoading(false);
