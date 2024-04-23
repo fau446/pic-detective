@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Dropdown from "./Dropdown";
 
 function Game() {
   const { gameID } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [characters, setCharacters] = useState([]);
+  const [displayDropdown, setDisplayDropdown] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     // fetch characters test function
@@ -25,6 +28,16 @@ function Game() {
     fetchCharacters();
   }, []);
 
+  function toggleDropdown(e) {
+    if (displayDropdown) {
+      setDisplayDropdown(false);
+    } else {
+      const { clientX, clientY } = e;
+      setDropdownPosition({ x: clientX, y: clientY });
+      setDisplayDropdown(true);
+    }
+  }
+
   if (isLoading) {
     return <p>Loading...</p>;
   } else {
@@ -32,6 +45,16 @@ function Game() {
       <div>
         <h1>{gameID}</h1>
         <p>Game</p>
+        <div onClick={toggleDropdown}>
+          <p>Image Goes Here!</p>
+        </div>
+        {displayDropdown && (
+          <Dropdown
+            coords={dropdownPosition}
+            options={characters}
+            handleOptionSelect={handleOptionSelect}
+          />
+        )}
       </div>
     );
   }
