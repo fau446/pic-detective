@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import styles from "../styles/Game.module.css";
+import pic from "../../public/zombie_waldo.jpeg";
 import Nav from "./Nav";
 import Dropdown from "./Dropdown";
 
@@ -10,6 +12,7 @@ function Game() {
   const [characters, setCharacters] = useState([]);
   const [displayDropdown, setDisplayDropdown] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ x: 0, y: 0 });
+  const [targetBox, setTargetBox] = useState([]);
 
   useEffect(() => {
     // fetch characters test function
@@ -31,14 +34,37 @@ function Game() {
     fetchCharacters();
   }, []);
 
-  function toggleDropdown(e) {
+  function handleClick(e) {
     if (displayDropdown) {
       setDisplayDropdown(false);
     } else {
-      const { clientX, clientY } = e;
-      setDropdownPosition({ x: clientX, y: clientY });
+      console.log(e);
+      const imageWidth = e.target.width;
+      const imageHeight = e.target.height;
+      const { pageX, pageY } = e;
+      const relativeX = Math.floor((e.nativeEvent.offsetX / imageWidth) * 100);
+      const relativeY = Math.floor((e.nativeEvent.offsetY / imageHeight) * 100);
+      const coordArray = generateTargetBoxCoords(relativeX, relativeY);
+
+      setDropdownPosition({ x: pageX, y: pageY });
+      setTargetBox(coordArray);
       setDisplayDropdown(true);
     }
+  }
+
+  function handleOptionSelect(id) {
+    setDisplayDropdown(false);
+    // pass id and targetBox to backend.
+  }
+
+  function generateTargetBoxCoords(xCoord, yCoord) {
+    let coordArray = [];
+    for (let i = xCoord - 5; i < xCoord + 5; i++) {
+      for (let j = yCoord - 5; j < yCoord + 5; j++) {
+        coordArray.push([i, j]);
+      }
+    }
+    return coordArray;
   }
 
   if (isLoading) {
@@ -55,11 +81,20 @@ function Game() {
         <div>
           <h1>{gameID}</h1>
           <p>Game</p>
-          <div onClick={toggleDropdown}>
-            <p>Image Goes Here!</p>
+          <div className={styles.playArea}>
+            <img
+              className={styles.img}
+              onClick={handleClick}
+              src={pic}
+              alt="something"
+            />
           </div>
           {displayDropdown && (
-            <Dropdown coords={dropdownPosition} options={characters} />
+            <Dropdown
+              coords={dropdownPosition}
+              options={characters}
+              handleOptionSelect={handleOptionSelect}
+            />
           )}
         </div>
       </>
