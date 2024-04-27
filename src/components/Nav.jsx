@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "../styles/Nav.module.css";
 
-function Nav({ isGameActive, characters }) {
+function Nav({ isGameActive, characters, gameTitle }) {
   return (
     <div className={styles.nav}>
       <div className={styles.top}>
@@ -10,7 +10,7 @@ function Nav({ isGameActive, characters }) {
         </Link>
         {isGameActive && (
           <>
-            <h2>Game Title</h2>
+            <h2>{gameTitle}</h2>
             <p>Clock</p>
           </>
         )}

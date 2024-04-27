@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import API_URL from "../assets/api-url";
 import styles from "../styles/Game.module.css";
 import pic from "../../public/zombie_waldo.jpeg";
 import Nav from "./Nav";
@@ -9,29 +10,33 @@ function Game() {
   const { gameID } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [isGameActive, setIsGameActive] = useState(false);
+  const [gameTitle, setGameTitle] = useState("");
   const [characters, setCharacters] = useState([]);
   const [displayDropdown, setDisplayDropdown] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ x: 0, y: 0 });
   const [targetBox, setTargetBox] = useState([]);
 
   useEffect(() => {
-    // fetch characters test function
-    // use gameID as search criteria
-    async function fetchCharacters() {
+    async function fetchGameDetails() {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setCharacters([
-          { _id: "Char1", name: "Bob", found: true },
-          { _id: "Char2", name: "Jane", found: false },
-        ]);
-        setIsLoading(false);
+        const response = await fetch(`${API_URL}/game/${gameID}`);
+        const jsonData = await response.json();
+
+        const charactersData = jsonData.game.characters.map((character) => ({
+          ...character,
+          found: false,
+        }));
+
+        setGameTitle(jsonData.game.name);
+        setCharacters(charactersData);
         setIsGameActive(true);
       } catch (err) {
-        console.log(`Error: ${err}`);
+        console.log(err);
       }
+      setIsLoading(false);
     }
 
-    fetchCharacters();
+    fetchGameDetails();
   }, []);
 
   function handleClick(e) {
@@ -77,10 +82,12 @@ function Game() {
   } else {
     return (
       <>
-        <Nav isGameActive={isGameActive} characters={characters} />
+        <Nav
+          isGameActive={isGameActive}
+          characters={characters}
+          gameTitle={gameTitle}
+        />
         <div>
-          <h1>{gameID}</h1>
-          <p>Game</p>
           <div className={styles.playArea}>
             <img
               className={styles.img}
