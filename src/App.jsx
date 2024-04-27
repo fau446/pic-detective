@@ -1,35 +1,25 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import API_URL from "./assets/api-url";
 import Home from "./components/Home";
 import Game from "./components/Game";
 
 function App() {
   const [games, setGames] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // temporary test function
     async function fetchGames() {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setGames([
-          {
-            _id: "Id1",
-            name: "Game 1",
-            imageURL: "URL 1",
-          },
-          {
-            _id: "Id2",
-            name: "Game 2",
-            imageURL: "URL 2",
-          },
-        ]);
-        setIsLoading(false);
-        console.log("Games fetched successfully");
+        const response = await fetch(`${API_URL}/`);
+        const jsonData = await response.json();
+        setGames(jsonData.games);
       } catch (err) {
-        console.log(`Error: ${err}`);
+        setError(err);
       }
+      setIsLoading(false);
     }
 
     fetchGames();
@@ -39,6 +29,7 @@ function App() {
     <>
       <BrowserRouter>
         <div>
+          {error && <p>{error}</p>}
           <Routes>
             <Route
               path="/"
