@@ -10,7 +10,7 @@ function Game() {
   const { gameID } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [isGameActive, setIsGameActive] = useState(false);
-  const [gameTitle, setGameTitle] = useState("");
+  const [gameDetails, setGameDetails] = useState({});
   const [characters, setCharacters] = useState([]);
   const [displayDropdown, setDisplayDropdown] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ x: 0, y: 0 });
@@ -27,7 +27,7 @@ function Game() {
           found: false,
         }));
 
-        setGameTitle(jsonData.game.name);
+        setGameDetails(jsonData.game);
         setCharacters(charactersData);
         setIsGameActive(true);
       } catch (err) {
@@ -85,14 +85,14 @@ function Game() {
         <Nav
           isGameActive={isGameActive}
           characters={characters}
-          gameTitle={gameTitle}
+          gameTitle={gameDetails.name}
         />
         <div>
           <div className={styles.playArea}>
             <img
               className={styles.img}
               onClick={handleClick}
-              src={pic}
+              src={"../../public/" + gameDetails.img_name}
               alt="something"
             />
           </div>
