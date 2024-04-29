@@ -9,6 +9,7 @@ function Game() {
   const { gameID } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [isGameActive, setIsGameActive] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);
   const [gameDetails, setGameDetails] = useState({});
   const [characters, setCharacters] = useState([]);
   const [displayDropdown, setDisplayDropdown] = useState(false);
@@ -37,6 +38,10 @@ function Game() {
 
     fetchGameDetails();
   }, []);
+
+  useEffect(() => {
+    checkGameCompletion();
+  }, [characters]);
 
   function handleClick(e) {
     if (displayDropdown) {
@@ -90,6 +95,18 @@ function Game() {
       }
     }
     return coordArray;
+  }
+
+  function checkGameCompletion() {
+    if (!isGameActive) return;
+
+    const charactersNotFound = characters.filter(
+      (character) => !character.found
+    );
+
+    if (charactersNotFound.length === 0) {
+      setIsGameOver(true);
+    }
   }
 
   if (isLoading) {
