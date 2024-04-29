@@ -15,6 +15,7 @@ function Game() {
   const [displayDropdown, setDisplayDropdown] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ x: 0, y: 0 });
   const [targetBox, setTargetBox] = useState([]);
+  const [elapsedTime, setElapsedTime] = useState(0);
 
   useEffect(() => {
     async function fetchGameDetails() {
@@ -42,6 +43,16 @@ function Game() {
   useEffect(() => {
     checkGameCompletion();
   }, [characters]);
+
+  useEffect(() => {
+    if (isGameActive && !isGameOver) {
+      const interval = setInterval(() => {
+        setElapsedTime((prevElapsedTime) => prevElapsedTime + 1);
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [isGameActive, isGameOver]);
 
   function handleClick(e) {
     if (displayDropdown) {
@@ -109,6 +120,15 @@ function Game() {
     }
   }
 
+  function formatTime(secs) {
+    const hours = Math.floor(secs / 3600);
+    const mins = Math.floor((secs % 3600) / 60);
+    const remainingSecs = secs % 60;
+    return `${hours < 10 ? "0" + hours : hours}:${
+      mins < 10 ? "0" + mins : mins
+    }:${remainingSecs < 10 ? "0" + remainingSecs : remainingSecs}`;
+  }
+
   if (isLoading) {
     return (
       <>
@@ -123,6 +143,7 @@ function Game() {
           isGameActive={isGameActive}
           characters={characters}
           gameTitle={gameDetails.name}
+          stopwatch={formatTime(elapsedTime)}
         />
         <div>
           <div className={styles.playArea}>

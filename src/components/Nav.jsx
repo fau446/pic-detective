@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import styles from "../styles/Nav.module.css";
 
-function Nav({ isGameActive, characters, gameTitle }) {
+function Nav({ isGameActive, characters, gameTitle, stopwatch }) {
+  // Stopwatch should display only if isGameActive
   return (
     <div className={styles.nav}>
       <div className={styles.top}>
@@ -11,7 +12,7 @@ function Nav({ isGameActive, characters, gameTitle }) {
         {isGameActive && (
           <>
             <h2>{gameTitle}</h2>
-            <p>Clock</p>
+            <p>{stopwatch}</p>
           </>
         )}
       </div>
