@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import API_URL from "../assets/api-url";
 import styles from "../styles/Game.module.css";
-import pic from "../../public/zombie_waldo.jpeg";
 import Nav from "./Nav";
 import Dropdown from "./Dropdown";
 
@@ -43,7 +42,6 @@ function Game() {
     if (displayDropdown) {
       setDisplayDropdown(false);
     } else {
-      console.log(e);
       const imageWidth = e.target.width;
       const imageHeight = e.target.height;
       const { pageX, pageY } = e;
@@ -57,9 +55,31 @@ function Game() {
     }
   }
 
-  function handleOptionSelect(id) {
+  async function handleOptionSelect(characterID) {
     setDisplayDropdown(false);
-    // pass id and targetBox to backend.
+
+    try {
+      const response = await fetch(`${API_URL}/character/${characterID}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ targetBox }),
+      });
+      const jsonData = await response.json();
+
+      if (jsonData.characterFound) {
+        setCharacters((prevCharacters) =>
+          prevCharacters.map((character) =>
+            character._id === characterID
+              ? { ...character, found: true }
+              : character
+          )
+        );
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   function generateTargetBoxCoords(xCoord, yCoord) {
