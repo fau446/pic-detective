@@ -4,6 +4,7 @@ import API_URL from "../assets/api-url";
 import styles from "../styles/Game.module.css";
 import Nav from "./Nav";
 import Dropdown from "./Dropdown";
+import GameOver from "./GameOver";
 
 function Game() {
   const { gameID } = useParams();
@@ -145,6 +146,12 @@ function Game() {
           gameTitle={gameDetails.name}
           stopwatch={formatTime(elapsedTime)}
         />
+        {isGameOver && (
+          <GameOver
+            formattedTime={formatTime(elapsedTime)}
+            time={elapsedTime}
+          />
+        )}
         <div>
           <div className={styles.playArea}>
             <img
