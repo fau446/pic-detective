@@ -4,6 +4,7 @@ import "./App.css";
 import API_URL from "./assets/api-url";
 import Home from "./components/Home";
 import Game from "./components/Game";
+import Leaderboard from "./components/Leaderboard";
 
 function App() {
   const [games, setGames] = useState([]);
@@ -36,6 +37,7 @@ function App() {
               element={<Home games={games} isLoading={isLoading} />}
             />
             <Route path="/game/:gameID" element={<Game />} />
+            <Route path="/leaderboard/:gameID" element={<Leaderboard />} />
           </Routes>
         </div>
       </BrowserRouter>
