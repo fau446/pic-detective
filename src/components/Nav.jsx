@@ -2,17 +2,16 @@ import { Link } from "react-router-dom";
 import styles from "../styles/Nav.module.css";
 
 function Nav({ isGameActive, characters, gameTitle, stopwatch }) {
-  // Stopwatch should display only if isGameActive
   return (
     <div className={styles.nav}>
       <div className={styles.top}>
         <Link to="/">
-          <h1>Pic Detective</h1>
+          <h1 className={styles.logo}>Pic Detective</h1>
         </Link>
         {isGameActive && (
           <>
-            <h2>{gameTitle}</h2>
-            <p>{stopwatch}</p>
+            <h2 className={styles.title}>{gameTitle}</h2>
+            <p className={styles.stopwatch}>{stopwatch}</p>
           </>
         )}
       </div>
@@ -21,9 +20,20 @@ function Nav({ isGameActive, characters, gameTitle, stopwatch }) {
           <ul>
             {characters.map((character) => {
               return (
-                <li key={character._id}>
+                <li className={styles.characters} key={character._id}>
+                  <img
+                    className={styles.icon}
+                    src={"../../" + character.img_name}
+                  />
                   <p>{character.name}</p>
-                  <p>{character.found ? "Found" : "Not Found"}</p>
+                  <img
+                    className={styles.icon}
+                    src={
+                      "../../" +
+                      (character.found ? "correct.png" : "incorrect.png")
+                    }
+                    alt={character.found}
+                  />
                 </li>
               );
             })}
