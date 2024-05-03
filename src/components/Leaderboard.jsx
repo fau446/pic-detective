@@ -5,11 +5,10 @@ import Nav from "./Nav";
 
 function Leaderboard() {
   const { gameID } = useParams();
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [scores, setScores] = useState([]);
-  // fetch scores for the given gameID
-  // in descending order (first score is the score with the lowest time)
-  // scores = [{name, time, date}]
+
   useEffect(() => {
     async function fetchScores() {
       try {
@@ -19,7 +18,8 @@ function Leaderboard() {
         setScores(jsonData.scores);
         setIsLoading(false);
       } catch (err) {
-        console.log(err);
+        setError(err);
+        setIsLoading(false);
       }
     }
 
@@ -37,6 +37,7 @@ function Leaderboard() {
     return (
       <>
         <Nav isGameActive={false} />
+        {error && <p>{error.message}</p>}
         <table>
           <thead>
             <tr>

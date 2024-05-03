@@ -8,6 +8,7 @@ import GameOver from "./GameOver";
 
 function Game() {
   const { gameID } = useParams();
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isGameActive, setIsGameActive] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
@@ -95,7 +96,7 @@ function Game() {
         );
       }
     } catch (err) {
-      console.log(err);
+      setError(err);
     }
   }
 
@@ -146,10 +147,12 @@ function Game() {
           gameTitle={gameDetails.name}
           stopwatch={formatTime(elapsedTime)}
         />
+        {error && <p>{error.message}</p>}
         {isGameOver && (
           <GameOver
             formattedTime={formatTime(elapsedTime)}
             time={elapsedTime}
+            setError={setError}
           />
         )}
         <div>

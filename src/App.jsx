@@ -30,7 +30,7 @@ function App() {
     <>
       <BrowserRouter>
         <div>
-          {error && <p>{error}</p>}
+          {error && <p>{error.message}</p>}
           <Routes>
             <Route
               path="/"

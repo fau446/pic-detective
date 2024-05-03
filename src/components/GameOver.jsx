@@ -2,10 +2,9 @@ import { useState } from "react";
 import API_URL from "../assets/api-url";
 import { useParams, useNavigate } from "react-router-dom";
 
-function GameOver({ formattedTime, time }) {
+function GameOver({ formattedTime, time, setError }) {
   const navigate = useNavigate();
   const { gameID } = useParams();
-  const [errors, setErrors] = useState(null);
   const [name, setName] = useState("");
 
   function handleInputChange(e) {
@@ -23,15 +22,10 @@ function GameOver({ formattedTime, time }) {
         },
         body: JSON.stringify({ name, time }),
       });
-      const jsonData = await response.json();
-      if (jsonData.errors) {
-        setErrors(jsonData.errors);
-        return;
-      }
-
+      await response.json();
       navigate(`/leaderboard/${gameID}`);
     } catch (err) {
-      console.log(err);
+      setError(err);
     }
   }
   console.log(`GameID: ${gameID}`);
