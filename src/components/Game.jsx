@@ -160,7 +160,7 @@ function Game() {
             <img
               className={styles.img}
               onClick={handleClick}
-              src={"../../public/" + gameDetails.img_name}
+              src={"../../" + gameDetails.img_name}
               alt="something"
             />
           </div>
