@@ -1,5 +1,33 @@
 .dropdown {
   position: absolute;
   z-index: 1000;
-  border: 2px solid black;
+  color: white;
+}
+
+.dropdown ul {
+  padding: 0;
+  cursor: pointer;
+}
+
+.dropdown li {
+  list-style-type: none;
+}
+
+.option {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+}
+
+.option:hover {
+  background-color: rgba(40, 40, 40, 0.8);
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
 }
