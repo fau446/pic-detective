@@ -40,7 +40,7 @@ function Nav({ isGameActive, characters, gameTitle, stopwatch, setNavHeight }) {
                       "../../" +
                       (character.found ? "correct.png" : "incorrect.png")
                     }
-                    alt={character.found}
+                    alt={character.found.toString()}
                   />
                 </li>
               );
