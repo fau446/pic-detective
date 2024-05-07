@@ -23,3 +23,9 @@
   justify-content: center;
   gap: 15px;
 }
+
+.buttons button {
+  background-color: #17252a;
+  border: 2px solid black;
+  color: white;
+}
