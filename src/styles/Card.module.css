@@ -28,4 +28,11 @@
   background-color: #17252a;
   border: 2px solid black;
   color: white;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.buttons button:hover {
+  /* background-color: rebeccapurple; */
+  background-color: #def2f1;
+  color: black;
 }
