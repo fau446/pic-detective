@@ -1,9 +1,17 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import styles from "../styles/Nav.module.css";
 
-function Nav({ isGameActive, characters, gameTitle, stopwatch }) {
+function Nav({ isGameActive, characters, gameTitle, stopwatch, setNavHeight }) {
+  const navRef = useRef(null);
+
+  if (navRef.current && setNavHeight) {
+    const height = navRef.current.offsetHeight;
+    setNavHeight(height);
+  }
+
   return (
-    <div className={styles.nav}>
+    <div className={styles.nav} ref={navRef}>
       <div className={styles.top}>
         <Link to="/">
           <h1 className={styles.logo}>Pic Detective</h1>

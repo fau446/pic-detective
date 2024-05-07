@@ -9,6 +9,7 @@ import GameOver from "./GameOver";
 function Game() {
   const { gameID } = useParams();
   const [error, setError] = useState(null);
+  const [navHeight, setNavHeight] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isGameActive, setIsGameActive] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
@@ -62,10 +63,13 @@ function Game() {
     } else {
       const imageWidth = e.target.width;
       const imageHeight = e.target.height;
-      const { pageX, pageY } = e;
+      let { pageX, pageY } = e;
       const relativeX = Math.floor((e.nativeEvent.offsetX / imageWidth) * 100);
       const relativeY = Math.floor((e.nativeEvent.offsetY / imageHeight) * 100);
       const coordArray = generateTargetBoxCoords(relativeX, relativeY);
+
+      if (!isWithinXCoords(imageWidth, pageX)) pageX = pageX - 200;
+      if (!isWithinYCoords(imageHeight, pageY - navHeight)) pageY = pageY - 130;
 
       setDropdownPosition({ x: pageX, y: pageY });
       setTargetBox(coordArray);
@@ -85,6 +89,8 @@ function Game() {
         body: JSON.stringify({ targetBox }),
       });
       const jsonData = await response.json();
+
+      // pop up response box depending if
 
       if (jsonData.characterFound) {
         setCharacters((prevCharacters) =>
@@ -131,6 +137,14 @@ function Game() {
     }:${remainingSecs < 10 ? "0" + remainingSecs : remainingSecs}`;
   }
 
+  function isWithinXCoords(imageWidth, xCoord) {
+    return imageWidth - xCoord <= 200 ? false : true;
+  }
+
+  function isWithinYCoords(imageHeight, yCoord) {
+    return imageHeight - yCoord <= 200 ? false : true;
+  }
+
   if (isLoading) {
     return (
       <>
@@ -146,6 +160,7 @@ function Game() {
           characters={characters}
           gameTitle={gameDetails.name}
           stopwatch={formatTime(elapsedTime)}
+          setNavHeight={setNavHeight}
         />
         {error && <p>{error.message}</p>}
         {isGameOver && (
