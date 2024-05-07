@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import API_URL from "../assets/api-url";
 import styles from "../styles/Game.module.css";
 import Nav from "./Nav";
+import Notification from "./Notification";
 import Dropdown from "./Dropdown";
 import GameOver from "./GameOver";
 
@@ -11,11 +12,14 @@ function Game() {
   const [error, setError] = useState(null);
   const [navHeight, setNavHeight] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFound, setIsFound] = useState(false);
+  const [notificationMsg, setNotificationMsg] = useState("");
   const [isGameActive, setIsGameActive] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [gameDetails, setGameDetails] = useState({});
   const [characters, setCharacters] = useState([]);
   const [displayDropdown, setDisplayDropdown] = useState(false);
+  const [displayNotification, setDisplayNotification] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ x: 0, y: 0 });
   const [targetBox, setTargetBox] = useState([]);
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -35,7 +39,7 @@ function Game() {
         setCharacters(charactersData);
         setIsGameActive(true);
       } catch (err) {
-        console.log(err);
+        setError(err);
       }
       setIsLoading(false);
     }
@@ -77,9 +81,8 @@ function Game() {
     }
   }
 
-  async function handleOptionSelect(characterID) {
+  async function handleOptionSelect(characterID, characterName) {
     setDisplayDropdown(false);
-
     try {
       const response = await fetch(`${API_URL}/character/${characterID}`, {
         method: "POST",
@@ -90,8 +93,6 @@ function Game() {
       });
       const jsonData = await response.json();
 
-      // pop up response box depending if
-
       if (jsonData.characterFound) {
         setCharacters((prevCharacters) =>
           prevCharacters.map((character) =>
@@ -100,7 +101,17 @@ function Game() {
               : character
           )
         );
+        setIsFound(true);
+        setNotificationMsg(`${characterName} has been found!`);
+      } else {
+        setIsFound(false);
+        setNotificationMsg("Try again!");
       }
+      setDisplayNotification(true);
+
+      setTimeout(() => {
+        setDisplayNotification(false);
+      }, 2000);
     } catch (err) {
       setError(err);
     }
@@ -185,6 +196,9 @@ function Game() {
               options={characters}
               handleOptionSelect={handleOptionSelect}
             />
+          )}
+          {displayNotification && (
+            <Notification isFound={isFound} message={notificationMsg} />
           )}
         </div>
       </>

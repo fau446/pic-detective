@@ -1,0 +1,28 @@
+.notification {
+  display: flex;
+  gap: 5px;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  color: white;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
+.notification p {
+  margin: 0;
+}
+
+.found {
+  background-color: rgb(1, 177, 1);
+}
+
+.notFound {
+  background-color: rgb(221, 0, 0);
+}
+
+.icon {
+  width: 25px;
+  height: 25px;
+}
