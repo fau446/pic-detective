@@ -19,6 +19,12 @@
   background-color: black;
   border-radius: 50px;
   padding: 15px 20px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.logo:hover {
+  background-color: #def2f1;
+  color: black;
 }
 
 .logo,
