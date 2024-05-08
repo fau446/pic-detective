@@ -1,6 +1,7 @@
 import { useState } from "react";
 import API_URL from "../assets/api-url";
 import { useParams, useNavigate } from "react-router-dom";
+import styles from "../styles/GameOver.module.css";
 
 function GameOver({ formattedTime, time, setError }) {
   const navigate = useNavigate();
@@ -28,23 +29,27 @@ function GameOver({ formattedTime, time, setError }) {
       setError(err);
     }
   }
-  console.log(`GameID: ${gameID}`);
 
   return (
-    <div>
-      <h2>You found them all!</h2>
-      <p>Your time was: {formattedTime}</p>
-      <form onSubmit={handleFormSubmit}>
-        <label htmlFor="name">Enter your name:</label>
-        <input
-          type="text"
-          name="name"
-          onChange={handleInputChange}
-          value={name}
-        />
-        <button>Submit</button>
-      </form>
-    </div>
+    <>
+      <div className={styles.modal}>
+        <h2>You found them all! Your time was: {formattedTime}.</h2>
+        <div className={styles.bottom}>
+          <p>Submit your score to the leaderboard!</p>
+          <form onSubmit={handleFormSubmit}>
+            <label htmlFor="name">Enter your name:</label>
+            <input
+              type="text"
+              name="name"
+              onChange={handleInputChange}
+              value={name}
+            />
+            <button>Submit</button>
+          </form>
+        </div>
+      </div>
+      <div className={styles.overlay}></div>
+    </>
   );
 }
 
