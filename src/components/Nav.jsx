@@ -1,9 +1,10 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../styles/Nav.module.css";
 
 function Nav({ isGameActive, characters, gameTitle, stopwatch, setNavHeight }) {
   const navRef = useRef(null);
+  const [src, setSrc] = useState("../../github-mark.png");
 
   useEffect(() => {
     if (navRef.current && setNavHeight) {
@@ -18,11 +19,20 @@ function Nav({ isGameActive, characters, gameTitle, stopwatch, setNavHeight }) {
         <Link to="/">
           <h1 className={styles.logo}>Pic Detective</h1>
         </Link>
-        {isGameActive && (
+        {isGameActive ? (
           <>
             <h2 className={styles.title}>{gameTitle}</h2>
             <p className={styles.stopwatch}>{stopwatch}</p>
           </>
+        ) : (
+          <a href="https://github.com/fau446/pic-detective" target="_blank">
+            <img
+              className={styles.icon}
+              src={src}
+              onMouseOver={() => setSrc("../../github-mark-white.png")}
+              onMouseOut={() => setSrc("../../github-mark.png")}
+            />
+          </a>
         )}
       </div>
       {isGameActive && (
