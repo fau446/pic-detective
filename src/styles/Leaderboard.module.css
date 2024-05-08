@@ -1,0 +1,37 @@
+.leaderboard {
+  color: white;
+  margin-bottom: 100px;
+}
+
+.leaderboard h2 {
+  font-size: 2em;
+}
+
+.leaderboard table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  width: 70%;
+}
+
+.leaderboard td,
+.leaderboard th {
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.1em;
+}
+
+.leaderboard th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.leaderboard th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.leaderboard tr:nth-child(even) {
+  background-color: #2b7a78;
+}
+
+.leaderboard thead {
+  background-color: #17252a;
+}
