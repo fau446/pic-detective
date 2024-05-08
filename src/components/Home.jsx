@@ -7,7 +7,12 @@ function Home({ games, isLoading }) {
     return (
       <>
         <Nav />
-        <p>Loading...</p>
+        <div class="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </>
     );
   } else {
