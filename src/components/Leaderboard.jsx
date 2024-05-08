@@ -33,7 +33,12 @@ function Leaderboard() {
     return (
       <>
         <Nav />
-        <p>Loading...</p>
+        <div class="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </>
     );
   } else {
