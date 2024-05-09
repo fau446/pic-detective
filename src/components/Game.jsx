@@ -11,6 +11,8 @@ function Game() {
   const { gameID } = useParams();
   const [error, setError] = useState(null);
   const [navHeight, setNavHeight] = useState(0);
+  const [dropdownHeight, setDropdownHeight] = useState(200);
+  const [dropdownWidth, setDropdownWidth] = useState(150);
   const [isLoading, setIsLoading] = useState(true);
   const [isFound, setIsFound] = useState(false);
   const [notificationMsg, setNotificationMsg] = useState("");
@@ -72,8 +74,9 @@ function Game() {
       const relativeY = Math.floor((e.nativeEvent.offsetY / imageHeight) * 100);
       const coordArray = generateTargetBoxCoords(relativeX, relativeY);
 
-      if (!isWithinXCoords(imageWidth, pageX)) pageX = pageX - 200;
-      if (!isWithinYCoords(imageHeight, pageY - navHeight)) pageY = pageY - 130;
+      if (!isWithinXCoords(imageWidth, pageX)) pageX = pageX - dropdownWidth;
+      if (!isWithinYCoords(imageHeight, pageY - navHeight))
+        pageY = pageY - dropdownHeight;
 
       setDropdownPosition({ x: pageX, y: pageY });
       setTargetBox(coordArray);
@@ -200,6 +203,8 @@ function Game() {
               coords={dropdownPosition}
               options={characters}
               handleOptionSelect={handleOptionSelect}
+              setDropdownHeight={setDropdownHeight}
+              setDropdownWidth={setDropdownWidth}
             />
           )}
           {displayNotification && (

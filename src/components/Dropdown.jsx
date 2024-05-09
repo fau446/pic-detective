@@ -1,10 +1,34 @@
+import { useEffect, useRef } from "react";
 import styles from "../styles/Dropdown.module.css";
 
-function Dropdown({ coords, options, handleOptionSelect }) {
+function Dropdown({
+  coords,
+  options,
+  handleOptionSelect,
+  setDropdownHeight,
+  setDropdownWidth,
+}) {
+  const dropdownRef = useRef(null);
+
   const filteredOptions = options.filter((option) => !option.found);
-  console.log(filteredOptions);
+
+  useEffect(() => {
+    if (dropdownRef.current && setDropdownHeight) {
+      const height = dropdownRef.current.offsetHeight;
+      setDropdownHeight(height);
+    }
+    if (dropdownRef.current && setDropdownWidth) {
+      const width = dropdownRef.current.offsetWidth;
+      setDropdownWidth(width);
+    }
+  }, []);
+
   return (
-    <div className={styles.dropdown} style={{ left: coords.x, top: coords.y }}>
+    <div
+      className={styles.dropdown}
+      style={{ left: coords.x, top: coords.y }}
+      ref={dropdownRef}
+    >
       <ul>
         {filteredOptions.map((option) => {
           return (
