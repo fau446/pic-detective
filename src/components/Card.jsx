@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import styles from "../styles/Card.module.css";
 
 function Card({ name, img_name, gameID }) {
-  console.log(img_name);
   return (
     <div className={styles.card}>
       <img src={"../../" + img_name} alt={name} />
