@@ -16,7 +16,7 @@ function Leaderboard() {
       try {
         const response = await fetch(`${API_URL}/leaderboard/${gameID}`);
         const jsonData = await response.json();
-        console.log(jsonData);
+
         setGameName(jsonData.gameName);
         setScores(jsonData.scores);
         setIsLoading(false);
