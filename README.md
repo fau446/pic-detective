@@ -1,8 +1,14 @@
-# React + Vite
+# Pic Detective
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Where's Waldo style game where the objective is to find the characters as quickly as possible. Contains a leaderboard feature where users can compare their time to others.
 
-Currently, two official plugins are available:
+- [Live Demo](https://pic-detective-beta.vercel.app/)
+- [Backend Repo](https://github.com/fau446/pic-detective-api)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Built with
+
+- React
+- NodeJS
+- Vite
+- MongoDB
+- Vanilla CSS
